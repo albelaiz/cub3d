@@ -6,7 +6,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFT = ./ft_libft/libft.a
 
-SRC = 
+SRC = main.c\
+	  parse.c\
+	  utils.c\
 
 
 OBJ = $(SRC=.c=.o)
