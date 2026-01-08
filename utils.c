@@ -11,3 +11,15 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int check_extension(char *file)
+{
+    int len;
+    len = ft_strlen(file);
+
+    if (len < 4)
+        return(0);
+    if (ft_strncmp(file + len - 4,".cub",4))
+        return(0);
+    return(1);
+}

@@ -14,7 +14,10 @@
 # define CUB3D_H
 
 # include "get_next_line/get_next_line.h"
-# include "./libft/libft.h"
+# include "libft/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
 
 typedef struct s_game
 {
@@ -54,4 +57,6 @@ typedef struct s_game
 }   t_game;
 
 void init_config(t_game *game);
+int check_extension(char *file);
+void parse_line(t_game *game , char *line);
 #endif
