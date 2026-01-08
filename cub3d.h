@@ -59,4 +59,5 @@ typedef struct s_game
 void init_config(t_game *game);
 int check_extension(char *file);
 void parse_line(t_game *game , char *line);
+void pars_texture(t_game *gmae, char *line , char type);
 #endif

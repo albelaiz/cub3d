@@ -12,25 +12,6 @@
 
 #include "cub3d.h"
 
-void init_config(t_game *game)
-{
-    game->path_no = NULL;
-    game->path_so = NULL;
-    game->path_ea = NULL;
-    game->path_we = NULL;
-    game->path_sprite = NULL;
-    game->map= NULL;
-    
-    game->win_width = 0;
-    game->win_height = 0;
-    game->color_floor = -1;
-    game->color_ceiling = -1;
-    game->map_width = 0;
-    game->map_height = 0;
-    game->player_start_x = 0;
-    game->player_start_y = 0;
-    game->player_start_dir = 0;
-}
 
 void parse_line(t_game *game , char *line)
 {
@@ -56,6 +37,7 @@ void parse_line(t_game *game , char *line)
         pars_map_line(game,trimmed);
     free(trimmed);
 }
+
 void pars_texture(t_game *gmae, char *line , char type)
 {
     char *path;
@@ -70,4 +52,58 @@ void pars_texture(t_game *gmae, char *line , char type)
     else if (type == 'E')
         gmae->path_ea = ft_strdup(path);
     free(path); 
+}
+
+void parse_color(t_game *game, char *line, char type)
+{
+    char *rgb;
+    int r,g,b;
+    rgb = ft_split(line +2,',');
+
+    r = ft_atoi(rgb[0]);
+    g = ft_atoi(rgb[1]);
+    b = ft_atoi(rgb[2]);
+
+    if (type == 'F')
+        game->color_floor = (r << 10) | (g << 8) | b;
+    else
+        game->color_ceiling = (r << 10) | (g << 8) | b;
+    free(rgb[0]);
+    free(rgb[1]);
+    free(rgb[2]);
+    free(rgb);
+}
+
+void pars_map_line(t_game *game, char *line)
+{
+    char **new_map;
+    int i,len,x;
+    new_map = malloc(sizeof(char *) * (game->map_height + 1));
+    if (!new_map)
+        return;
+    len = ft_strlen(line);
+    i = 0;
+    x = 0;
+    while (i < game->map_height)
+    {
+        new_map[i] = game->map[i];
+        i++;
+    }
+    new_map[game->map_height] = ft_strdup(line);
+    free(game->map);
+    game->map = new_map;
+    if (len > game->map_width)
+        game->map_width = len;
+    while (line[x])
+    {
+        if(line[x] == 'N' || line[x] == 'S' || line[x] == 'E'|| line[x] == 'W')
+        {
+            game->player_start_x = x;
+            game->player_start_y = game->map_height -1;
+            game->player_start_dir = line[x];
+        }
+        x++;
+    }
+    game->map_height++;
+    
 }
