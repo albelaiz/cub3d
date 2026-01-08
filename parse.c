@@ -22,17 +22,17 @@ void parse_line(t_game *game , char *line)
         return;
     }
     if (ft_strncmp(trimmed, "NO ",3) == 0)
-        parse_texture(game,trimmed,'N');
+        pars_texture(game,trimmed,'N');
     else if (ft_strncmp(trimmed, "SO ",3) == 0)
-        parse_texture(game,trimmed,'S');
+        pars_texture(game,trimmed,'S');
     else if (ft_strncmp(trimmed, "WE ",3) == 0)
-        parse_texture(game,trimmed,'W');
+        pars_texture(game,trimmed,'W');
     else if (ft_strncmp(trimmed, "EA ",3) == 0)
-        parse_texture(game,trimmed,'E');
+        pars_texture(game,trimmed,'E');
     else if (ft_strncmp(trimmed, "F ",2) == 0)
-        parse_texture(game,trimmed,'F');
+        parse_color(game,trimmed,'F');
     else if (ft_strncmp(trimmed, "C ",2) == 0)
-        parse_texture(game,trimmed,'C');
+        parse_color(game,trimmed,'C');
     else
         pars_map_line(game,trimmed);
     free(trimmed);
@@ -56,7 +56,7 @@ void pars_texture(t_game *gmae, char *line , char type)
 
 void parse_color(t_game *game, char *line, char type)
 {
-    char *rgb;
+    char **rgb;
     int r,g,b;
     rgb = ft_split(line +2,',');
 
@@ -65,9 +65,9 @@ void parse_color(t_game *game, char *line, char type)
     b = ft_atoi(rgb[2]);
 
     if (type == 'F')
-        game->color_floor = (r << 10) | (g << 8) | b;
+        game->color_floor = (r << 16) | (g << 8) | b;
     else
-        game->color_ceiling = (r << 10) | (g << 8) | b;
+        game->color_ceiling = (r << 16) | (g << 8) | b;
     free(rgb[0]);
     free(rgb[1]);
     free(rgb[2]);
@@ -99,7 +99,7 @@ void pars_map_line(t_game *game, char *line)
         if(line[x] == 'N' || line[x] == 'S' || line[x] == 'E'|| line[x] == 'W')
         {
             game->player_start_x = x;
-            game->player_start_y = game->map_height -1;
+            game->player_start_y = game->map_height;
             game->player_start_dir = line[x];
         }
         x++;
