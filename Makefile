@@ -13,6 +13,7 @@ GNL_SRC = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 SRC = main.c\
 	  parse.c\
 	  utils.c\
+	  validation.c\
 	  $(GNL_SRC)
 
 OBJ = $(SRC:.c=.o)

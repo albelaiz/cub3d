@@ -41,6 +41,10 @@ int main(int ac , char **av)
     }
     close(fd);
     
+    // Validate parsed data
+    if (!validate_all(&game))
+        return (1);
+    
     // Debug output - print what we parsed
     printf("\n=== Parsing Results ===\n");
     printf("North texture: %s\n", game.path_no);

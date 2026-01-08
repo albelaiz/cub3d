@@ -62,4 +62,5 @@ void parse_line(t_game *game , char *line);
 void pars_texture(t_game *gmae, char *line , char type);
 void parse_color(t_game *game, char *line, char type);
 void pars_map_line(t_game *game, char *line);
+int validate_all(t_game *game);
 #endif

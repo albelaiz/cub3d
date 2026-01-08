@@ -44,13 +44,29 @@ void pars_texture(t_game *gmae, char *line , char type)
     path = ft_strtrim(line + 3, " \t");
 
     if (type == 'N')
+    {
+        if (gmae->path_no)
+            printf("Error\nDuplicate NO texture\n");
         gmae->path_no = ft_strdup(path);
+    }
     else if (type == 'S')
+    {
+        if (gmae->path_so)
+            printf("Error\nDuplicate SO texture\n");
         gmae->path_so = ft_strdup(path);
+    }
     else if (type == 'W')
+    {
+        if (gmae->path_we)
+            printf("Error\nDuplicate WE texture\n");
         gmae->path_we = ft_strdup(path);
+    }
     else if (type == 'E')
+    {
+        if (gmae->path_ea)
+            printf("Error\nDuplicate EA texture\n");
         gmae->path_ea = ft_strdup(path);
+    }
     free(path); 
 }
 
@@ -64,10 +80,28 @@ void parse_color(t_game *game, char *line, char type)
     g = ft_atoi(rgb[1]);
     b = ft_atoi(rgb[2]);
 
+    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+    {
+        printf("Error\nInvalid RGB color values (must be 0-255)\n");
+        free(rgb[0]);
+        free(rgb[1]);
+        free(rgb[2]);
+        free(rgb);
+        return;
+    }
+
     if (type == 'F')
+    {
+        if (game->color_floor != -1)
+            printf("Error\nDuplicate floor color (F)\n");
         game->color_floor = (r << 16) | (g << 8) | b;
+    }
     else
+    {
+        if (game->color_ceiling != -1)
+            printf("Error\nDuplicate ceiling color (C)\n");
         game->color_ceiling = (r << 16) | (g << 8) | b;
+    }
     free(rgb[0]);
     free(rgb[1]);
     free(rgb[2]);
