@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:56:50 by albelaiz          #+#    #+#             */
-/*   Updated: 2025/11/17 16:11:45 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:08:19 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int main(int ac , char **av)
     t_game game;
     int fd;
     char  *line;
+	void *mlx;
+	void *mlx_win;
 
     if (ac != 2)
     {
@@ -44,7 +46,9 @@ int main(int ac , char **av)
     // Validate parsed data
     if (!validate_all(&game))
         return (1);
-    
+    mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "hello worls");
+	mlx_loop(mlx);
     // Debug output - print what we parsed
     printf("\n=== Parsing Results ===\n");
     printf("North texture: %s\n", game.path_no);

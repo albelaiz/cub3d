@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:03:12 by albelaiz          #+#    #+#             */
-/*   Updated: 2025/11/17 15:00:22 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:19:10 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "get_next_line/get_next_line.h"
-# include "libft/libft.h"
+# include "./libft/src/libft.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include "./minilibx/mlx.h"
 
 typedef struct s_game
 {

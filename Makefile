@@ -2,19 +2,15 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
-
+CFLAGS = -Wall -Wextra -Werror -Imlx
+MLX = -Lmlx -lmlx -framework OpenGL -framework AppKit 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
-
-GNL_DIR = ./get_next_line
-GNL_SRC = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 
 SRC = main.c\
 	  parse.c\
 	  utils.c\
 	  validation.c\
-	  $(GNL_SRC)
 
 OBJ = $(SRC:.c=.o)
 
@@ -24,7 +20,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
