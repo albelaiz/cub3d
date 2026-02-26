@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:19:21 by albelaiz          #+#    #+#             */
-/*   Updated: 2025/11/17 16:16:03 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/02/21 03:55:29 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,4 @@ void pars_map_line(t_game *game, char *line)
         x++;
     }
     game->map_height++;
-    
 }

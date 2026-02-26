@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 14:20:00 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/01/08 14:20:00 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/02/22 01:37:40 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,22 @@ int	validate_map_characters(t_game *game)
 	return (1);
 }
 
+// int	check_position(t_game *game, int y, int x)
+// {
+// 	if (y < 0 || y >= game->map_height)
+// 		return (0);
+// 	if (x < 0 || x >= (int)ft_strlen(game->map[y]))
+// 		return (0);
+// 	if (game->map[y][x] == ' ')
+// 		return (0);
+// 	return (1);
+// }
+
 int	check_position(t_game *game, int y, int x)
 {
 	if (y < 0 || y >= game->map_height)
 		return (0);
-	if (x < 0 || x >= (int)ft_strlen(game->map[y]))
+	if (x < 0 || x >= game->map_width)
 		return (0);
 	if (game->map[y][x] == ' ')
 		return (0);
@@ -139,10 +150,26 @@ int	validate_map_closed(t_game *game)
 	return (1);
 }
 
+// int	validate_all(t_game *game)
+// {
+// 	if (!validate_missing_elements(game))
+// 		return (0);
+// 	if (!validate_player(game))
+// 		return (0);
+// 	if (!validate_map_characters(game))
+// 		return (0);
+// 	if (!validate_map_closed(game))
+// 		return (0);
+// 	return (1);
+// }
 int	validate_all(t_game *game)
 {
 	if (!validate_missing_elements(game))
 		return (0);
+
+	if (!normalize_map(game))
+		return (0);
+
 	if (!validate_player(game))
 		return (0);
 	if (!validate_map_characters(game))
