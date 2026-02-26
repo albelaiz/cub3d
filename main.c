@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:56:50 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/02/22 05:05:02 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/02/26 12:02:04 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int main(int ac , char **av)
 	if (!validate_all(&game))
 		return (1);
 	init_player(&game);
+	load_textures(&game);
 	game.mlx_ptr = mlx_init(800, 600, "Square", true);
 	game.img_ptr = mlx_new_image(game.mlx_ptr, 800, 600);
 	if (!game.img_ptr)
