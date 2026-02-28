@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 03:45:25 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/02/22 02:33:11 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/02/28 12:13:39 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static void	apply_motion(t_game *g, double vx, double vy)
 
 void	handle_player_input(t_game *g)
 {
-	const double step = 0.08;
-	const double turn = 0.06;
+	const double step = 0.04;
+	const double turn = 0.03;
 
 	// facing direction
 	double fx = cos(g->player_dir);

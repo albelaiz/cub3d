@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:29:06 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/02/26 12:02:55 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/02/28 12:11:34 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ void	init_ray(t_game *g, int x, t_ray *r)
 	r->ray_dir_y = r->dir_y + r->plane_y * r->cam_x;
 	r->map_x = (int)g->player_x;
 	r->map_y = (int)g->player_y;
-	r->delta_x = (r->ray_dir_x == 0) ? 1e30 : fabs(1.0 / r->ray_dir_x);
-	r->delta_y = (r->ray_dir_y == 0) ? 1e30 : fabs(1.0 / r->ray_dir_y);
+	if (r->ray_dir_x == 0)
+		r->delta_x = 1e30;
+	else
+		r->delta_x = fabs(1.0 / r->ray_dir_x);
+	if (r->ray_dir_y == 0)
+		r->delta_y = 1e30;
+	else
+		r->delta_y = fabs(1.0 / r->ray_dir_y);
 }
 
 void	setup_steps(t_game *g, t_ray *r)
