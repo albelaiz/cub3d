@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:56:50 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/02/26 12:02:04 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:40:29 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ static void update(void *param)
 	draw_player(g);
 }
 
+void ff()
+{
+	system("leaks -q cub3D");
+}
 
 int main(int ac , char **av)
 {
@@ -100,6 +104,7 @@ int main(int ac , char **av)
 	char  *line;
 
 
+	atexit(ff);
 	if (ac != 2)
 	{
 		printf("Error\nUsage: ./cub3d <map.cub>\n");
