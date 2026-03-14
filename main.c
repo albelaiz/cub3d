@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:56:50 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/03/10 12:40:29 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/14 12:22:45 by albelaiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 #define TILE 10
 
-static int	exit_game(t_game *game, int status)
+static int exit_game(t_game *game, int status)
 {
 	cleanup_game(game);
 	return (status);
 }
 
-static void	close_game(void *param)
+static void close_game(void *param)
 {
-	t_game	*game;
+	t_game *game;
 
 	game = (t_game *)param;
 	exit(exit_game(game, EXIT_SUCCESS));
@@ -63,29 +63,29 @@ static void draw_square(t_game *g, int start_x, int start_y, int size, uint32_t 
 
 void draw_map(t_game *g)
 {
-    for (int y = 0; y < g->map_height; y++)
-    {
-        for (int x = 0; x < g->map_width; x++)
-        {
-            char tile = g->map[y][x];
+	for (int y = 0; y < g->map_height; y++)
+	{
+		for (int x = 0; x < g->map_width; x++)
+		{
+			char tile = g->map[y][x];
 
-            if (tile == '1')
-                draw_square(g, x * TILE, y * TILE, TILE, 0xFF888888);
-            else if (tile == '0')
-                draw_square(g, x * TILE, y * TILE, TILE, 0xFF000000);
-            else
-                draw_square(g, x * TILE, y * TILE, TILE, 0xFF202020); // void/space
-        }
-    }
+			if (tile == '1')
+				draw_square(g, x * TILE, y * TILE, TILE, 0xFF888888);
+			else if (tile == '0')
+				draw_square(g, x * TILE, y * TILE, TILE, 0xFF000000);
+			else
+				draw_square(g, x * TILE, y * TILE, TILE, 0xFF202020); // void/space
+		}
+	}
 }
 
 void draw_player(t_game *g)
 {
-    int px = (int)(g->player_x * TILE);
-    int py = (int)(g->player_y * TILE);
+	int px = (int)(g->player_x * TILE);
+	int py = (int)(g->player_y * TILE);
 
-    // small square marker
-    draw_square(g, px - 3, py - 3, 6, 0xFF0000FF);
+	// small square marker
+	draw_square(g, px - 3, py - 3, 6, 0xFF0000FF);
 }
 static void clear_image(mlx_image_t *img, uint32_t color)
 {
@@ -111,12 +111,11 @@ void ff()
 	system("leaks -q cub3D");
 }
 
-int main(int ac , char **av)
+int main(int ac, char **av)
 {
 	t_game game;
 	int fd;
-	char  *line;
-
+	char *line;
 
 	atexit(ff);
 	if (ac != 2)
@@ -129,19 +128,19 @@ int main(int ac , char **av)
 		printf("Error\nMap file must have .cub extension\n");
 		exit(1);
 	}
-	fd = open(av[1],O_RDONLY);
+	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (printf("Error\nCannot open file\n"), 1);
 	init_config(&game);
 	line = get_next_line(fd);
-	while(line != NULL)
+	while (line != NULL)
 	{
 		parse_line(&game, line);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	
+
 	// Validate parsed data
 	if (!validate_all(&game))
 		return (exit_game(&game, 1));

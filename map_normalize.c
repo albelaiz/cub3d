@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   map_normalize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 12:00:58 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/01 12:00:59 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/14 12:23:03 by albelaiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	free_partial_map(char **map, int count)
+static void free_partial_map(char **map, int count)
 {
 	while (count > 0)
 		free(map[--count]);
 	free(map);
 }
 
-static char	*pad_line(const char *src, int width)
+static char *pad_line(const char *src, int width)
 {
-	char	*dst;
-	int		i;
+	char *dst;
+	int i;
 
 	dst = (char *)malloc(width + 1);
 	if (!dst)
@@ -39,10 +39,10 @@ static char	*pad_line(const char *src, int width)
 	return (dst);
 }
 
-int	normalize_map(t_game *g)
+int normalize_map(t_game *g)
 {
-	char	**new_map;
-	int		y;
+	char **new_map;
+	int y;
 
 	if (!g->map || g->map_height <= 0)
 		return (printf("Error\nMissing map\n"), 0);

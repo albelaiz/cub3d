@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 01:44:03 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/02/22 03:12:08 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/14 12:23:56 by albelaiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <math.h>
 
-double	deg_to_rad(double deg)
+double deg_to_rad(double deg)
 {
 	return (deg * M_PI / 180.0);
 }
 
-double	rad_to_deg(double rad)
+double rad_to_deg(double rad)
 {
 	return (rad * 180.0 / M_PI);
 }
 
-double	norm_deg(double a)
+double norm_deg(double a)
 {
 	while (a < 0.0)
 		a += 360.0;
@@ -31,6 +31,7 @@ double	norm_deg(double a)
 		a -= 360.0;
 	return (a);
 }
+
 void init_player(t_game *g)
 {
 	int x;
@@ -58,7 +59,7 @@ void init_player(t_game *g)
 					g->player_dir = deg_to_rad(180);
 
 				g->map[y][x] = '0';
-				return ;
+				return;
 			}
 			x++;
 		}

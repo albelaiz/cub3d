@@ -6,18 +6,18 @@
 /*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:16:38 by albelaiz          #+#    #+#             */
-/*   Updated: 2025/11/17 16:16:49 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/03/14 12:31:29 by albelaiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	free_map(char **map, int map_height)
+static void free_map(char **map, int map_height)
 {
-    int	i;
+    int i;
 
     if (!map)
-        return ;
+        return;
     i = 0;
     while (i < map_height)
     {
@@ -33,21 +33,21 @@ int check_extension(char *file)
     len = ft_strlen(file);
 
     if (len < 4)
-        return(0);
-    if (ft_strncmp(file + len - 4,".cub",4)!= 0)
-        return(0);
-    return(1);
+        return (0);
+    if (ft_strncmp(file + len - 4, ".cub", 4) != 0)
+        return (0);
+    return (1);
 }
 
-void init_config(t_game *game)
+void    init_config(t_game *game)
 {
     game->path_no = NULL;
     game->path_so = NULL;
     game->path_ea = NULL;
     game->path_we = NULL;
     game->path_sprite = NULL;
-    game->map= NULL;
-    
+    game->map = NULL;
+
     game->win_width = 0;
     game->win_height = 0;
     game->color_floor = -1;
@@ -65,10 +65,10 @@ void init_config(t_game *game)
     game->tex_ea = NULL;
 }
 
-void	cleanup_game(t_game *game)
+void    cleanup_game(t_game *game)
 {
     if (!game)
-        return ;
+        return;
     if (game->img_ptr && game->mlx_ptr)
         mlx_delete_image(game->mlx_ptr, game->img_ptr);
     if (game->tex_no)

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:19:21 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/02/21 03:55:29 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/14 12:23:31 by albelaiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-void parse_line(t_game *game , char *line)
+void parse_line(t_game *game, char *line)
 {
     char *trimmed = ft_strtrim(line, " \t\n");
     if (!trimmed || trimmed[0] == '\0')
@@ -21,24 +20,24 @@ void parse_line(t_game *game , char *line)
         free(trimmed);
         return;
     }
-    if (ft_strncmp(trimmed, "NO ",3) == 0)
-        pars_texture(game,trimmed,'N');
-    else if (ft_strncmp(trimmed, "SO ",3) == 0)
-        pars_texture(game,trimmed,'S');
-    else if (ft_strncmp(trimmed, "WE ",3) == 0)
-        pars_texture(game,trimmed,'W');
-    else if (ft_strncmp(trimmed, "EA ",3) == 0)
-        pars_texture(game,trimmed,'E');
-    else if (ft_strncmp(trimmed, "F ",2) == 0)
-        parse_color(game,trimmed,'F');
-    else if (ft_strncmp(trimmed, "C ",2) == 0)
-        parse_color(game,trimmed,'C');
+    if (ft_strncmp(trimmed, "NO ", 3) == 0)
+        pars_texture(game, trimmed, 'N');
+    else if (ft_strncmp(trimmed, "SO ", 3) == 0)
+        pars_texture(game, trimmed, 'S');
+    else if (ft_strncmp(trimmed, "WE ", 3) == 0)
+        pars_texture(game, trimmed, 'W');
+    else if (ft_strncmp(trimmed, "EA ", 3) == 0)
+        pars_texture(game, trimmed, 'E');
+    else if (ft_strncmp(trimmed, "F ", 2) == 0)
+        parse_color(game, trimmed, 'F');
+    else if (ft_strncmp(trimmed, "C ", 2) == 0)
+        parse_color(game, trimmed, 'C');
     else
-        pars_map_line(game,trimmed);
+        pars_map_line(game, trimmed);
     free(trimmed);
 }
 
-void pars_texture(t_game *gmae, char *line , char type)
+void pars_texture(t_game *gmae, char *line, char type)
 {
     char *path;
     path = ft_strtrim(line + 3, " \t");
@@ -67,14 +66,14 @@ void pars_texture(t_game *gmae, char *line , char type)
             printf("Error\nDuplicate EA texture\n");
         gmae->path_ea = ft_strdup(path);
     }
-    free(path); 
+    free(path);
 }
 
 void parse_color(t_game *game, char *line, char type)
 {
     char **rgb;
-    int r,g,b;
-    rgb = ft_split(line +2,',');
+    int r, g, b;
+    rgb = ft_split(line + 2, ',');
 
     r = ft_atoi(rgb[0]);
     g = ft_atoi(rgb[1]);
@@ -111,7 +110,7 @@ void parse_color(t_game *game, char *line, char type)
 void pars_map_line(t_game *game, char *line)
 {
     char **new_map;
-    int i,len,x;
+    int i, len, x;
     new_map = malloc(sizeof(char *) * (game->map_height + 1));
     if (!new_map)
         return;
@@ -130,7 +129,7 @@ void pars_map_line(t_game *game, char *line)
         game->map_width = len;
     while (line[x])
     {
-        if(line[x] == 'N' || line[x] == 'S' || line[x] == 'E'|| line[x] == 'W')
+        if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
         {
             game->player_start_x = x;
             game->player_start_y = game->map_height;

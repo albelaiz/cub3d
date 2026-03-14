@@ -6,8 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -Imlx
 
 MLX = ./MLX42-master/build/libmlx42.a
 
-GLFW = /goinfre/yaamaich/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib
-
+GLFW = /goinfre/albelaiz/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
 LIBFT_DIR = ./libft
