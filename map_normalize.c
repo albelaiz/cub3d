@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+static void	free_partial_map(char **map, int count)
+{
+	while (count > 0)
+		free(map[--count]);
+	free(map);
+}
+
 static char	*pad_line(const char *src, int width)
 {
 	char	*dst;
@@ -51,7 +58,10 @@ int	normalize_map(t_game *g)
 	{
 		new_map[y] = pad_line(g->map[y], g->map_width);
 		if (!new_map[y])
+		{
+			free_partial_map(new_map, y);
 			return (printf("Error\nMalloc failed\n"), 0);
+		}
 		y++;
 	}
 	new_map[g->map_height] = NULL;

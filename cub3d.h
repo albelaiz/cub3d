@@ -79,6 +79,7 @@ typedef struct s_game
 /* utils.c */
 int     check_extension(char *file);
 void    init_config(t_game *game);
+void    cleanup_game(t_game *game);
 
 /* parse.c */
 void    parse_line(t_game *game, char *line);
@@ -119,7 +120,7 @@ int     dda_loop(t_game *g, t_ray *r);
 void    cast_and_draw(t_game *g, int x);
 
 /* recasting_tex.c */
-void            load_textures(t_game *g);
+int             load_textures(t_game *g);
 uint32_t        get_tex_pixel(mlx_texture_t *tex, int tx, int ty);
 mlx_texture_t   *get_wall_texture(t_game *g, t_ray *r);
 void            draw_textured_vline(t_game *g, int x, t_ray *r, double perp);

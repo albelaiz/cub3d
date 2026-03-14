@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	load_textures(t_game *g)
+int	load_textures(t_game *g)
 {
 	g->tex_no = mlx_load_png(g->path_no);
 	g->tex_so = mlx_load_png(g->path_so);
@@ -21,8 +21,9 @@ void	load_textures(t_game *g)
 	if (!g->tex_no || !g->tex_so || !g->tex_we || !g->tex_ea)
 	{
 		printf("Error\nFailed to load texture\n");
-		exit(1);
+		return (0);
 	}
+	return (1);
 }
 
 uint32_t	get_tex_pixel(mlx_texture_t *tex, int tx, int ty)

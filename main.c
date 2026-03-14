@@ -14,6 +14,20 @@
 
 #define TILE 10
 
+static int	exit_game(t_game *game, int status)
+{
+	cleanup_game(game);
+	return (status);
+}
+
+static void	close_game(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	exit(exit_game(game, EXIT_SUCCESS));
+}
+
 static void draw_square(t_game *g, int start_x, int start_y, int size, uint32_t color)
 {
 	int x;
@@ -130,17 +144,20 @@ int main(int ac , char **av)
 	
 	// Validate parsed data
 	if (!validate_all(&game))
-		return (1);
+		return (exit_game(&game, 1));
 	init_player(&game);
-	load_textures(&game);
+	if (!load_textures(&game))
+		return (exit_game(&game, 1));
 	game.mlx_ptr = mlx_init(800, 600, "Square", true);
+	if (!game.mlx_ptr)
+		return (exit_game(&game, EXIT_FAILURE));
 	game.img_ptr = mlx_new_image(game.mlx_ptr, 800, 600);
 	if (!game.img_ptr)
-		return (EXIT_FAILURE);
-	mlx_image_to_window(game.mlx_ptr, game.img_ptr, 0, 0);
+		return (exit_game(&game, EXIT_FAILURE));
+	if (mlx_image_to_window(game.mlx_ptr, game.img_ptr, 0, 0) < 0)
+		return (exit_game(&game, EXIT_FAILURE));
+	mlx_close_hook(game.mlx_ptr, close_game, &game);
 	mlx_loop_hook(game.mlx_ptr, update, &game);
 	mlx_loop(game.mlx_ptr);
-	mlx_terminate(game.mlx_ptr);
-
-	return(0);
+	return (exit_game(&game, 0));
 }
