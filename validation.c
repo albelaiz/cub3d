@@ -64,6 +64,31 @@ static char	**alloc_visited(t_game *g)
 	return (visited);
 }
 
+static int	has_void_neighbor_8(t_game *g, int y, int x)
+{
+	int	cy;
+	int	cx;
+
+	cy = y - 1;
+	while (cy <= y + 1)
+	{
+		cx = x - 1;
+		while (cx <= x + 1)
+		{
+			if (!(cy == y && cx == x))
+			{
+				if (cy < 0 || cx < 0 || cy >= g->map_height || cx >= g->map_width)
+					return (1);
+				if (g->map[cy][cx] == ' ' || g->map[cy][cx] == '\0')
+					return (1);
+			}
+			cx++;
+		}
+		cy++;
+	}
+	return (0);
+}
+
 static int	flood_fill_region(t_game *g, char **visited, int y, int x)
 {
 	int			i;
@@ -123,6 +148,9 @@ static int	check_map_closed(t_game *game)
 					printf("Error\nInvalid character in map\n"), 0);
 			if (is_player(c))
 				player_count++;
+			if (is_walkable(c) && has_void_neighbor_8(game, y, x))
+				return (free_visited(visited, game->map_height),
+					printf("Error\nMap is not closed around floor/player\n"), 0);
 			if (is_walkable(c) && !visited[y][x]
 				&& !flood_fill_region(game, visited, y, x))
 				return (free_visited(visited, game->map_height),
