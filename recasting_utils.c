@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:45:10 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/18 10:27:39 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/18 11:18:41 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	draw_background(t_game *g)
 		while (x < w)
 		{
 			if (y < h / 2)
-				mlx_put_pixel(g->img_ptr, x, y, 0x00BFFFFF);
+				mlx_put_pixel(g->img_ptr, x, y, g->color_ceiling);
 			else
-				mlx_put_pixel(g->img_ptr, x, y, 0x808080FF);
+				mlx_put_pixel(g->img_ptr, x, y, g->color_floor);
 			x++;
 		}
 		y++;
