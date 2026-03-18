@@ -27,40 +27,86 @@ static int	is_valid_map_char(char c)
 	return (c == '0' || c == '1' || c == ' ' || is_player(c));
 }
 
-static int	has_void_neighbor(t_game *g, int y, int x)
+static void	free_visited(char **visited, int height)
 {
-	int		cy;
-	int		cx;
-	char	c;
+	int	i;
 
-	cy = y - 1;
-	while (cy <= y + 1)
+	i = 0;
+	if (!visited)
+		return ;
+	while (i < height)
 	{
-		cx = x - 1;
-		while (cx <= x + 1)
-		{
-			if (!(cy == y && cx == x))
-			{
-				if (cy < 0 || cx < 0 || cy >= g->map_height || cx >= g->map_width)
-					return (1);
-				c = g->map[cy][cx];
-				if (c == ' ' || c == '\0')
-					return (1);
-			}
-			cx++;
-		}
-		cy++;
+		free(visited[i]);
+		i++;
 	}
-	return (0);
+	free(visited);
+}
+
+static char	**alloc_visited(t_game *g)
+{
+	char	**visited;
+	int		y;
+
+	visited = (char **)malloc(sizeof(char *) * g->map_height);
+	if (!visited)
+		return (NULL);
+	y = 0;
+	while (y < g->map_height)
+	{
+		visited[y] = (char *)ft_calloc(g->map_width, sizeof(char));
+		if (!visited[y])
+		{
+			free_visited(visited, y);
+			return (NULL);
+		}
+		y++;
+	}
+	return (visited);
+}
+
+static int	flood_fill_region(t_game *g, char **visited, int y, int x)
+{
+	int			dy;
+	int			dx;
+	char		c;
+
+	if (y < 0 || x < 0 || y >= g->map_height || x >= g->map_width)
+		return (0);
+	c = g->map[y][x];
+	if (c == ' ' || c == '\0')
+		return (0);
+	if (c == '1')
+		return (1);
+	if (visited[y][x])
+		return (1);
+	visited[y][x] = 1;
+	dy = -1;
+	while (dy <= 1)
+	{
+		dx = -1;
+		while (dx <= 1)
+		{
+			if (!(dy == 0 && dx == 0)
+				&& !flood_fill_region(g, visited, y + dy, x + dx))
+				return (0);
+			dx++;
+		}
+		dy++;
+	}
+	return (1);
 }
 
 static int	check_map_closed(t_game *game)
 {
+	char	**visited;
 	int	y;
 	int	x;
 	int	player_count;
 	char	c;
 
+	visited = alloc_visited(game);
+	if (!visited)
+		return (printf("Error\nMalloc failed\n"), 0);
 	player_count = 0;
 	y = 0;
 	while (y < game->map_height)
@@ -70,17 +116,22 @@ static int	check_map_closed(t_game *game)
 		{
 			c = game->map[y][x];
 			if (!is_valid_map_char(c))
-				return (printf("Error\nInvalid character in map\n"), 0);
+				return (free_visited(visited, game->map_height),
+					printf("Error\nInvalid character in map\n"), 0);
 			if (is_player(c))
 				player_count++;
-			if (is_walkable(c) && has_void_neighbor(game, y, x))
-				return (printf("Error\nMap is not closed around floor/player\n"), 0);
+			if (is_walkable(c) && !visited[y][x]
+				&& !flood_fill_region(game, visited, y, x))
+				return (free_visited(visited, game->map_height),
+					printf("Error\nMap is not closed around floor/player\n"), 0);
 			x++;
 		}
 		y++;
 	}
 	if (player_count != 1)
-		return (printf("Error\nMap must contain exactly one player\n"), 0);
+		return (free_visited(visited, game->map_height),
+			printf("Error\nMap must contain exactly one player\n"), 0);
+	free_visited(visited, game->map_height);
 	return (1);
 }
 
