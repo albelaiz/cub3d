@@ -53,6 +53,10 @@ void	init_config(t_game *game)
 	game->color_ceiling = -1;
 	game->map_width = 0;
 	game->map_height = 0;
+	game->parse_error = 0;
+	game->config_mask = 0;
+	game->map_started = 0;
+	game->map_ended = 0;
 	game->player_start_x = 0;
 	game->player_start_y = 0;
 	game->player_start_dir = 0;
