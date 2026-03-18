@@ -66,8 +66,9 @@ static char	**alloc_visited(t_game *g)
 
 static int	flood_fill_region(t_game *g, char **visited, int y, int x)
 {
-	int			dy;
-	int			dx;
+	int			i;
+	int			dir_y[4];
+	int			dir_x[4];
 	char		c;
 
 	if (y < 0 || x < 0 || y >= g->map_height || x >= g->map_width)
@@ -80,18 +81,20 @@ static int	flood_fill_region(t_game *g, char **visited, int y, int x)
 	if (visited[y][x])
 		return (1);
 	visited[y][x] = 1;
-	dy = -1;
-	while (dy <= 1)
+	dir_y[0] = -1;
+	dir_y[1] = 1;
+	dir_y[2] = 0;
+	dir_y[3] = 0;
+	dir_x[0] = 0;
+	dir_x[1] = 0;
+	dir_x[2] = -1;
+	dir_x[3] = 1;
+	i = 0;
+	while (i < 4)
 	{
-		dx = -1;
-		while (dx <= 1)
-		{
-			if (!(dy == 0 && dx == 0)
-				&& !flood_fill_region(g, visited, y + dy, x + dx))
-				return (0);
-			dx++;
-		}
-		dy++;
+		if (!flood_fill_region(g, visited, y + dir_y[i], x + dir_x[i]))
+			return (0);
+		i++;
 	}
 	return (1);
 }
