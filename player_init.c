@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 01:44:03 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/18 09:35:14 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:01:33 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ double	norm_deg(double a)
 	return (a);
 }
 
-static void	set_player_direction(t_game *g, char c)
+void	set_player_direction(t_game *g, char c)
 {
 	if (c == 'S')
 		g->player_dir = deg_to_rad(90);

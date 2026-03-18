@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   recasting_ray.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:29:06 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/14 12:24:04 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:17:20 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
 
-void init_ray(t_game *g, int x, t_ray *r)
+void	init_ray(t_game *g, int x, t_ray *r)
 {
-	double fov;
-	double plane_len;
+	double	fov;
+	double	plane_len;
 
 	fov = M_PI / 3.0;
 	plane_len = tan(fov / 2.0);
@@ -39,7 +38,7 @@ void init_ray(t_game *g, int x, t_ray *r)
 		r->delta_y = fabs(1.0 / r->ray_dir_y);
 }
 
-void setup_steps(t_game *g, t_ray *r)
+void	setup_steps(t_game *g, t_ray *r)
 {
 	if (r->ray_dir_x < 0)
 	{
@@ -63,9 +62,9 @@ void setup_steps(t_game *g, t_ray *r)
 	}
 }
 
-int dda_loop(t_game *g, t_ray *r)
+int	dda_loop(t_game *g, t_ray *r)
 {
-	int hit;
+	int	hit;
 
 	hit = 0;
 	r->side = 0;
@@ -83,7 +82,8 @@ int dda_loop(t_game *g, t_ray *r)
 			r->map_y += r->step_y;
 			r->side = 1;
 		}
-		if (r->map_x < 0 || r->map_y < 0 || r->map_x >= g->map_width || r->map_y >= g->map_height)
+		if (r->map_x < 0 || r->map_y < 0 || r->map_x >= g->map_width 
+			|| r->map_y >= g->map_height)
 			return (0);
 		if (g->map[r->map_y][r->map_x] == '1')
 			hit = 1;
@@ -91,15 +91,15 @@ int dda_loop(t_game *g, t_ray *r)
 	return (1);
 }
 
-void cast_and_draw(t_game *g, int x)
+void	cast_and_draw(t_game *g, int x)
 {
-	t_ray r;
-	double perp;
+	t_ray	r;
+	double	perp;
 
 	init_ray(g, x, &r);
 	setup_steps(g, &r);
 	if (!dda_loop(g, &r))
-		return;
+		return ;
 	if (r.side == 0)
 	{
 		perp = (r.map_x - g->player_x + (1 - r.step_x) / 2.0) / r.ray_dir_x;

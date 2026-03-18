@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 09:47:13 by yaamaich          #+#    #+#             */
+/*   Updated: 2026/03/18 10:27:51 by yaamaich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	free_rgb_array(char **rgb)
@@ -8,12 +20,12 @@ void	free_rgb_array(char **rgb)
 	free(rgb);
 }
 
-void	set_color(t_game *game, char type, int r, int g, int b)
+void	set_color_type(t_game *game, char type, int col)
 {
 	if (type == 'F')
-		game->color_floor = (r << 16) | (g << 8) | b;
+		game->color_floor = col;
 	else
-		game->color_ceiling = (r << 16) | (g << 8) | b;
+		game->color_ceiling = col;
 }
 
 void	find_player_in_line(t_game *game, char *line)
@@ -31,17 +43,5 @@ void	find_player_in_line(t_game *game, char *line)
 			game->player_start_dir = line[x];
 		}
 		x++;
-	}
-}
-
-void	copy_old_map(t_game *game, char **new_map)
-{
-	int	i;
-
-	i = 0;
-	while (i < game->map_height)
-	{
-		new_map[i] = game->map[i];
-		i++;
 	}
 }

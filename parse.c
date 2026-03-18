@@ -6,7 +6,7 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:19:21 by albelaiz          #+#    #+#             */
-/*   Updated: 2026/03/18 04:15:46 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:38:33 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	parse_color(t_game *game, char *line, char type)
 	int		r;
 	int		g;
 	int		b;
+	int		col;
 
 	rgb = ft_split(line + 2, ',');
 	r = ft_atoi(rgb[0]);
@@ -72,7 +73,8 @@ void	parse_color(t_game *game, char *line, char type)
 		free_rgb_array(rgb);
 		return ;
 	}
-	set_color(game, type, r, g, b);
+	col = (r << 16) | (g << 8) | b;
+	set_color_type(game, type, col);
 	free_rgb_array(rgb);
 }
 
@@ -80,6 +82,7 @@ void	pars_map_line(t_game *game, char *line)
 {
 	char	**new_map;
 	int		i;
+	int		len;
 
 	new_map = malloc(sizeof(char *) * (game->map_height + 1));
 	if (!new_map)
@@ -93,7 +96,8 @@ void	pars_map_line(t_game *game, char *line)
 	new_map[game->map_height] = ft_strdup(line);
 	free(game->map);
 	game->map = new_map;
-	if (ft_strlen(line) > game->map_width)
+	len = (int)ft_strlen(line);
+	if (len > game->map_width)
 		game->map_width = ft_strlen(line);
 	find_player_in_line(game, line);
 	game->map_height++;

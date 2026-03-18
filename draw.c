@@ -6,17 +6,15 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 04:08:13 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/18 04:08:23 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:25:20 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
 #define TILE 10
 
-void	draw_square(t_game *g, int start_x, int start_y,
-	int size, uint32_t color)
+void	draw_square(t_game *g, int start_x, int start_y, int size)
 {
 	int	x;
 	int	y;
@@ -33,16 +31,15 @@ void	draw_square(t_game *g, int start_x, int start_y,
 		end_x = (int)g->img_ptr->width;
 	if (end_y > (int)g->img_ptr->height)
 		end_y = (int)g->img_ptr->height;
-	y = start_y;
-	while (y < end_y)
+	y = start_y - 1;
+	while (++y < end_y)
 	{
 		x = start_x;
 		while (x < end_x)
 		{
-			mlx_put_pixel(g->img_ptr, x, y, color);
+			mlx_put_pixel(g->img_ptr, x, y, 0xFF888888);
 			x++;
 		}
-		y++;
 	}
 }
 
@@ -52,11 +49,11 @@ static void	draw_tile_row(t_game *g, int y, int x)
 
 	tile = g->map[y][x];
 	if (tile == '1')
-		draw_square(g, x * TILE, y * TILE, TILE, 0xFF888888);
+		draw_square(g, x * TILE, y * TILE, TILE);
 	else if (tile == '0')
-		draw_square(g, x * TILE, y * TILE, TILE, 0xFF000000);
+		mlx_put_pixel(g->img_ptr, x * TILE, y * TILE, 0xFF000000);
 	else
-		draw_square(g, x * TILE, y * TILE, TILE, 0xFF202020);
+		mlx_put_pixel(g->img_ptr, x * TILE, y * TILE, 0xFF202020);
 }
 
 void	draw_map(t_game *g)
@@ -84,7 +81,7 @@ void	draw_player(t_game *g)
 
 	px = (int)(g->player_x * TILE);
 	py = (int)(g->player_y * TILE);
-	draw_square(g, px - 3, py - 3, 6, 0xFF0000FF);
+	draw_square(g, px - 3, py - 3, 6);
 }
 
 void	clear_image(mlx_image_t *img, uint32_t color)

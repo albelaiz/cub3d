@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   recasting_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albelaiz <albelaiz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 11:45:10 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/14 12:24:22 by albelaiz         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:27:39 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
 
-void draw_background(t_game *g)
+void	draw_background(t_game *g)
 {
-	int w;
-	int h;
-	int x;
-	int y;
+	int	w;
+	int	h;
+	int	x;
+	int	y;
 
 	w = (int)g->img_ptr->width;
 	h = (int)g->img_ptr->height;
@@ -38,8 +37,11 @@ void draw_background(t_game *g)
 	}
 }
 
-void draw_vline(t_game *g, int x, int y0, int y1, uint32_t color)
+void	draw_vline(t_game *g, int x, int y0, int y1)
 {
+	uint32_t	color;
+
+	color = 0xFFFFFFFF;
 	if (y0 < 0)
 		y0 = 0;
 	if (y1 >= (int)g->img_ptr->height)

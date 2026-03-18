@@ -1,145 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 09:46:42 by yaamaich          #+#    #+#             */
+/*   Updated: 2026/03/18 10:07:43 by yaamaich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int	validate_missing_elements(t_game *game)
+static int	check_textures(t_game *game)
 {
-	if (!game->path_no)
-		return (printf("Error\nMissing NO texture\n"), 0);
-	if (!game->path_so)
-		return (printf("Error\nMissing SO texture\n"), 0);
-	if (!game->path_we)
-		return (printf("Error\nMissing WE texture\n"), 0);
-	if (!game->path_ea)
-		return (printf("Error\nMissing EA texture\n"), 0);
-	if (game->color_floor == -1)
-		return (printf("Error\nMissing floor color (F)\n"), 0);
-	if (game->color_ceiling == -1)
-		return (printf("Error\nMissing ceiling color (C)\n"), 0);
-	return (1);
-}
-
-int	count_players(t_game *game)
-{
-	int	i;
-	int	j;
-	int	count;
-
-	count = 0;
-	i = 0;
-	while (i < game->map_height)
+	if (!game->path_no || !game->path_so
+		|| !game->path_we || !game->path_ea)
 	{
-		j = 0;
-		while (game->map[i][j])
-		{
-			if (game->map[i][j] == 'N' || game->map[i][j] == 'S' ||
-				game->map[i][j] == 'E' || game->map[i][j] == 'W')
-				count++;
-			j++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-int	validate_player(t_game *game)
-{
-	int	player_count;
-
-	player_count = count_players(game);
-	if (player_count == 0)
-		return (printf("Error\nNo player position in map\n"), 0);
-	if (player_count > 1)
-		return (printf("Error\nMultiple players in map\n"), 0);
-	return (1);
-}
-
-int	is_valid_map_char(char c)
-{
-	if (c == '0' || c == '1' || c == ' ')
-		return (1);
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
-	return (0);
-}
-
-int	validate_map_characters(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < game->map_height)
-	{
-		j = 0;
-		while (game->map[i][j])
-		{
-			if (!is_valid_map_char(game->map[i][j]))
-			{
-				printf("Error\nInvalid character '%c' in map at line %d\n",
-					game->map[i][j], i + 1);
-				return (0);
-			}
-			j++;
-		}
-		i++;
+		printf("Error\nMissing texture paths\n");
+		return (0);
 	}
 	return (1);
 }
 
-int	check_position(t_game *game, int y, int x)
+static int	check_colors(t_game *game)
 {
-	if (y < 0 || y >= game->map_height)
+	if (game->color_floor == -1 || game->color_ceiling == -1)
+	{
+		printf("Error\nMissing colors\n");
 		return (0);
-	if (x < 0 || x >= game->map_width)
-		return (0);
-	if (game->map[y][x] == ' ')
-		return (0);
+	}
 	return (1);
 }
 
-int	validate_map_closed(t_game *game)
+static int	check_map(t_game *game)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < game->map_height)
+	if (!game->map || game->map_height <= 0 || game->map_width <= 0)
 	{
-		j = 0;
-		while (game->map[i][j])
-		{
-			if (game->map[i][j] == '0' || game->map[i][j] == 'N' ||
-				game->map[i][j] == 'S' || game->map[i][j] == 'E' ||
-				game->map[i][j] == 'W')
-			{
-				if (!check_position(game, i - 1, j) ||
-					!check_position(game, i + 1, j) ||
-					!check_position(game, i, j - 1) ||
-					!check_position(game, i, j + 1))
-				{
-					printf("Error\nMap not closed at position (%d, %d)\n", i, j);
-					return (0);
-				}
-			}
-			j++;
-		}
-		i++;
+		printf("Error\nMissing or invalid map\n");
+		return (0);
 	}
+	if (normalize_map(game) == 0)
+		return (0);
 	return (1);
 }
 
 int	validate_all(t_game *game)
 {
-	if (!validate_missing_elements(game))
+	if (!check_textures(game))
 		return (0);
-
-	if (!normalize_map(game))
+	if (!check_colors(game))
 		return (0);
-
-	if (!validate_player(game))
-		return (0);
-	if (!validate_map_characters(game))
-		return (0);
-	if (!validate_map_closed(game))
+	if (!check_map(game))
 		return (0);
 	return (1);
 }

@@ -6,10 +6,9 @@
 /*   By: yaamaich <yaamaich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 04:08:44 by yaamaich          #+#    #+#             */
-/*   Updated: 2026/03/18 04:08:51 by yaamaich         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:02:21 by yaamaich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -51,7 +50,7 @@ int	read_map_file(t_game *game, int fd)
 
 int	init_game_window(t_game *game)
 {
-	game->mlx_ptr = mlx_init(800, 600, "Square", true);
+	game->mlx_ptr = mlx_init(800, 600, "cub3D", true);
 	if (!game->mlx_ptr)
 		return (0);
 	game->img_ptr = mlx_new_image(game->mlx_ptr, 800, 600);
