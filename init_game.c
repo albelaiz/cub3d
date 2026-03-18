@@ -42,9 +42,13 @@ int	read_map_file(t_game *game, int fd)
 	{
 		parse_line(game, line);
 		free(line);
+		if (game->parse_error)
+			break ;
 		line = get_next_line(fd);
 	}
 	close(fd);
+	if (game->parse_error)
+		return (0);
 	return (1);
 }
 
