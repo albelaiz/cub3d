@@ -15,6 +15,7 @@
 void	parse_line(t_game *game, char *line)
 {
 	char	*trimmed;
+	char	*map_line;
 
 	trimmed = ft_strtrim(line, " \t\n");
 	if (!trimmed || trimmed[0] == '\0')
@@ -35,7 +36,14 @@ void	parse_line(t_game *game, char *line)
 	else if (ft_strncmp(trimmed, "C ", 2) == 0)
 		parse_color(game, trimmed, 'C');
 	else
-		pars_map_line(game, trimmed);
+	{
+		map_line = ft_strtrim(line, "\n");
+		if (map_line)
+		{
+			pars_map_line(game, map_line);
+			free(map_line);
+		}
+	}
 	free(trimmed);
 }
 

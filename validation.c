@@ -12,6 +12,78 @@
 
 #include "cub3d.h"
 
+static int	is_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+static int	is_walkable(char c)
+{
+	return (c == '0' || is_player(c));
+}
+
+static int	is_valid_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == ' ' || is_player(c));
+}
+
+static int	has_void_neighbor(t_game *g, int y, int x)
+{
+	int		cy;
+	int		cx;
+	char	c;
+
+	cy = y - 1;
+	while (cy <= y + 1)
+	{
+		cx = x - 1;
+		while (cx <= x + 1)
+		{
+			if (!(cy == y && cx == x))
+			{
+				if (cy < 0 || cx < 0 || cy >= g->map_height || cx >= g->map_width)
+					return (1);
+				c = g->map[cy][cx];
+				if (c == ' ' || c == '\0')
+					return (1);
+			}
+			cx++;
+		}
+		cy++;
+	}
+	return (0);
+}
+
+static int	check_map_closed(t_game *game)
+{
+	int	y;
+	int	x;
+	int	player_count;
+	char	c;
+
+	player_count = 0;
+	y = 0;
+	while (y < game->map_height)
+	{
+		x = 0;
+		while (x < game->map_width)
+		{
+			c = game->map[y][x];
+			if (!is_valid_map_char(c))
+				return (printf("Error\nInvalid character in map\n"), 0);
+			if (is_player(c))
+				player_count++;
+			if (is_walkable(c) && has_void_neighbor(game, y, x))
+				return (printf("Error\nMap is not closed around floor/player\n"), 0);
+			x++;
+		}
+		y++;
+	}
+	if (player_count != 1)
+		return (printf("Error\nMap must contain exactly one player\n"), 0);
+	return (1);
+}
+
 static int	check_textures(t_game *game)
 {
 	if (!game->path_no || !game->path_so
@@ -41,6 +113,8 @@ static int	check_map(t_game *game)
 		return (0);
 	}
 	if (normalize_map(game) == 0)
+		return (0);
+	if (!check_map_closed(game))
 		return (0);
 	return (1);
 }
