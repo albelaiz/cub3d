@@ -79,6 +79,7 @@ void			pars_map_line(t_game *game, char *line);
 void			free_rgb_array(char **rgb);
 void			set_color_type(t_game *game, char type, int col);
 void			find_player_in_line(t_game *game, char *line);
+int				parse_rgb_strict(const char *s, int *color);
 int				validate_all(t_game *game);
 int				normalize_map(t_game *g);
 void			init_player(t_game *g);

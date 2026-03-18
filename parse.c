@@ -65,25 +65,14 @@ void	pars_texture(t_game *game, char *line, char type)
 
 void	parse_color(t_game *game, char *line, char type)
 {
-	char	**rgb;
-	int		r;
-	int		g;
-	int		b;
 	int		col;
 
-	rgb = ft_split(line + 2, ',');
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	if (!parse_rgb_strict(line + 2, &col))
 	{
-		printf("Error\nInvalid RGB color values (must be 0-255)\n");
-		free_rgb_array(rgb);
+		printf("Error\nInvalid RGB format\n");
 		return ;
 	}
-	col = (r << 16) | (g << 8) | b;
 	set_color_type(game, type, col);
-	free_rgb_array(rgb);
 }
 
 void	pars_map_line(t_game *game, char *line)
