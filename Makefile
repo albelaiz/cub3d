@@ -6,24 +6,17 @@ CFLAGS = -Wall -Wextra -Werror -Imlx
 
 MLX = ./MLX42-master/build/libmlx42.a
 
-GLFW = /goinfre/albelaiz/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib
+GLFW = /goinfre/yaamaich/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib
+
 FRAMEWORKS = -framework OpenGL -framework AppKit
 
 LIBFT_DIR = ./libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRC = main.c \
-       parse.c \
-       validation.c \
-       map_normalize.c \
-       player_init.c \
-       move_player.c \
-       utils.c \
-       recasting.c \
-       recasting_utils.c \
-       recasting_ray.c\
-	   recasting_tex.c 
+SRC = main.c parse.c validation.c map_normalize.c player_init.c move_player.c \
+      utils.c recasting.c recasting_utils.c recasting_ray.c recasting_tex.c \
+      draw.c init_game.c parse_utils.c recasting_tex_draw.c \
 
 OBJ = $(SRC:.c=.o)
 
